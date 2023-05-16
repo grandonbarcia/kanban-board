@@ -10,9 +10,12 @@ export default function Column({ column, tasks }) {
     <div className="m-8 border-2 rounded">
       <div className="p-8">{column.title}</div>
       <Droppable droppableId={column.id}>
-        {(provided) => (
+        {(provided, snapshot) => (
           <div
-            className="p-8"
+            className={
+              'p-8 ' +
+              (snapshot.isDraggingOver ? 'bg-blue-200' : 'bg-white-500')
+            }
             ref={provided.innerRef}
             {...provided.droppableProps}
           >
