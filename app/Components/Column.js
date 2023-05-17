@@ -13,7 +13,7 @@ export default function Column({ column, tasks }) {
         {(provided, snapshot) => (
           <div
             className={
-              'p-8 grow h-100 ' +
+              'p-8 grow h-96 ' +
               (snapshot.isDraggingOver ? 'bg-blue-200' : 'bg-white-500')
             }
             ref={provided.innerRef}
