@@ -5,6 +5,7 @@ import { useState } from 'react';
 import initialData from './initial-data';
 import Image from 'next/image';
 import Column from './Components/Column';
+import Modal from './Components/Modal';
 
 export default function Home() {
   const [data, setData] = useState(initialData);
@@ -73,16 +74,19 @@ export default function Home() {
   }
 
   return (
-    <main>
-      <DragDropContext onDragEnd={onDragEnd}>
-        <div className="flex ">
-          {data.columnOrder.map((columnId) => {
-            const column = data.columns[columnId];
-            const tasks = column.taskIds.map((taskId) => data.tasks[taskId]);
-            return <Column key={column.id} column={column} tasks={tasks} />;
-          })}
-        </div>
-      </DragDropContext>
-    </main>
+    <>
+      <main className="relative">
+        <Modal />
+        <DragDropContext className="relative" onDragEnd={onDragEnd}>
+          <div className="flex relative">
+            {data.columnOrder.map((columnId) => {
+              const column = data.columns[columnId];
+              const tasks = column.taskIds.map((taskId) => data.tasks[taskId]);
+              return <Column key={column.id} column={column} tasks={tasks} />;
+            })}
+          </div>
+        </DragDropContext>
+      </main>
+    </>
   );
 }
