@@ -2,6 +2,7 @@
 
 import { DragDropContext } from 'react-beautiful-dnd';
 import { useState } from 'react';
+import { MdOutlineBackupTable } from 'react-icons/md';
 import initialData from './initial-data';
 import Image from 'next/image';
 import Column from './Components/Column';
@@ -75,17 +76,45 @@ export default function Home() {
 
   return (
     <>
-      <main className="relative">
-        <Modal />
-        <DragDropContext className="relative" onDragEnd={onDragEnd}>
-          <div className="flex relative">
-            {data.columnOrder.map((columnId) => {
-              const column = data.columns[columnId];
-              const tasks = column.taskIds.map((taskId) => data.tasks[taskId]);
-              return <Column key={column.id} column={column} tasks={tasks} />;
-            })}
+      <main className="flex">
+        <div className="w-1/6">
+          <div className="text-3xl text-center p-10 font-extrabold">Kanban</div>
+          <div className="flex">
+            <MdOutlineBackupTable /> All Boards
           </div>
-        </DragDropContext>
+          <div className="flex">
+            <MdOutlineBackupTable /> Platform Launch
+          </div>
+          <div className="flex">
+            <MdOutlineBackupTable /> Marketing Plan
+          </div>
+          <div className="flex">
+            <MdOutlineBackupTable /> Roadmap
+          </div>
+          <div className="flex">
+            <MdOutlineBackupTable /> + Create new Board
+          </div>
+        </div>
+        <div className="">
+          <div className="flex justify-between p-11">
+            <div className="text-2xl">Platform Launch</div>
+            <div>
+              <Modal />
+            </div>
+          </div>
+
+          <DragDropContext className="relative" onDragEnd={onDragEnd}>
+            <div className="flex relative">
+              {data.columnOrder.map((columnId) => {
+                const column = data.columns[columnId];
+                const tasks = column.taskIds.map(
+                  (taskId) => data.tasks[taskId]
+                );
+                return <Column key={column.id} column={column} tasks={tasks} />;
+              })}
+            </div>
+          </DragDropContext>
+        </div>
       </main>
     </>
   );
