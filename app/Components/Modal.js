@@ -9,7 +9,7 @@ export default function Modal() {
         type="button"
         onClick={() => setShowModal(true)}
       >
-        Open regular modal
+        + Add New Task
       </button>
       {showModal ? (
         <>
