@@ -3,6 +3,8 @@
 import { DragDropContext } from 'react-beautiful-dnd';
 import { useState } from 'react';
 import { MdOutlineBackupTable } from 'react-icons/md';
+import { BiAbacus } from 'react-icons/bi';
+import { BsThreeDotsVertical } from 'react-icons/bs';
 import initialData from './initial-data';
 import Image from 'next/image';
 import Column from './Components/Column';
@@ -77,29 +79,32 @@ export default function Home() {
   return (
     <>
       <main className="flex">
-        <div className="w-1/6">
-          <div className="text-3xl text-center p-10 font-extrabold">Kanban</div>
-          <div className="flex">
-            <MdOutlineBackupTable /> All Boards
+        <div className="h-screen w-1/6 border-r-4">
+          <div className="flex text-3xl font-extrabold p-10 ">
+            <BiAbacus className="mr-2" /> Kanban
           </div>
-          <div className="flex">
-            <MdOutlineBackupTable /> Platform Launch
-          </div>
-          <div className="flex">
-            <MdOutlineBackupTable /> Marketing Plan
-          </div>
-          <div className="flex">
-            <MdOutlineBackupTable /> Roadmap
-          </div>
-          <div className="flex">
-            <MdOutlineBackupTable /> + Create new Board
+          <div className="">
+            <div className="flex pl-10 pt-2 pb-2">ALL BOARDS (8)</div>
+            <div className="flex w-11/12 pl-10 pt-2 pb-2 bg-purple-500 text-white rounded-r-3xl">
+              <MdOutlineBackupTable className="mr-2" /> Platform Launch
+            </div>
+            <div className="flex pl-10 pt-2 pb-2">
+              <MdOutlineBackupTable className="mr-2" /> Marketing Plan
+            </div>
+            <div className="flex pl-10 pt-2 pb-2">
+              <MdOutlineBackupTable className="mr-2" /> Roadmap
+            </div>
+            <div className="flex pl-10 pt-2 pb-2">
+              <MdOutlineBackupTable className="mr-2" /> + Create new Board
+            </div>
           </div>
         </div>
-        <div className="">
-          <div className="flex justify-between p-11">
+        <div className="w-screen">
+          <div className="flex justify-between p-11 border-b-4">
             <div className="text-2xl">Platform Launch</div>
-            <div>
+            <div className="flex items-center">
               <Modal />
+              <BsThreeDotsVertical size={32} />
             </div>
           </div>
 
