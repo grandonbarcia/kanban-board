@@ -24,6 +24,9 @@ const initialData = {
   },
   // Facilitate reordering of the columns
   columnOrder: ['column-1', 'column-2', 'column-3'],
+
+  // Boards
+  boards: { 'board-1': { id: 'board-1', title: 'Music' } },
 };
 
 export default initialData;
