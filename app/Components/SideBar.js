@@ -80,7 +80,10 @@ export default function SideBar() {
           </button>
           {showModal ? (
             <>
-              <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
+              <div
+                className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
+                onClick={() => setShowModal(false)}
+              >
                 <div className="relative w-1/3 my-6 bg-white p-6 rounded">
                   {/*content*/}
                   <div className="text-xl font-bold">
