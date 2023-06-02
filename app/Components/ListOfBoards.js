@@ -1,4 +1,5 @@
 import React from 'react';
+import { MdOutlineBackupTable } from 'react-icons/md';
 
 export default function ListOfBoards({ title }) {
   return (
