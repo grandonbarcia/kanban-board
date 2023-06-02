@@ -1,10 +1,55 @@
-import React from 'react';
+import React, { use } from 'react';
 import { BiAbacus } from 'react-icons/bi';
 import { MdOutlineBackupTable } from 'react-icons/md';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import ListOfBoards from './ListOfBoards';
+
+const initialData = {
+  tasks: {},
+  columns: {
+    'column-1': {
+      id: 'column-1',
+      title: 'To do',
+      taskIds: [],
+    },
+    'column-2': {
+      id: 'column-2',
+      title: 'In Progress',
+      taskIds: [],
+    },
+    'column-3': {
+      id: 'column-3',
+      title: 'Done',
+      taskIds: [],
+    },
+  },
+  // Facilitate reordering of the columns
+  columnOrder: ['column-1', 'column-2', 'column-3'],
+};
 
 export default function SideBar() {
   const [showModal, setShowModal] = useState(false);
+  const [boardNames, setBoardNames] = useState(
+    JSON.parse(localStorage.getItem('Board Names')) || []
+  );
+  const [value, setValue] = useState('');
+
+  function arrayIsEmpty(arr) {
+    return arr.length ? true : false;
+  }
+
+  function createNewBoard() {
+    setBoardNames(() => [...boardNames, value]);
+    setShowModal(false);
+  }
+
+  useEffect(() => {
+    if (!arrayIsEmpty(boardNames) || value === '') return;
+
+    localStorage.setItem('Board Names', JSON.stringify(boardNames));
+    localStorage.setItem(value, JSON.stringify(initialData));
+    console.log(boardNames);
+  }, [boardNames]);
 
   return (
     <div className="h-screen w-1/6 border-r-4">
@@ -22,6 +67,9 @@ export default function SideBar() {
         <div className="flex pl-10 pt-2 pb-2">
           <MdOutlineBackupTable className="mr-2" /> Roadmap
         </div>
+        {boardNames.map((name) => {
+          return <ListOfBoards title={name} />;
+        })}
         <div className=" pl-10 pt-2 pb- text-purple-500">
           <button
             className="flex"
@@ -51,13 +99,16 @@ export default function SideBar() {
                       id="title"
                       type="text"
                       placeholder="e.g Project Name"
+                      onChange={(e) => {
+                        setValue(e.currentTarget.value);
+                      }}
                     />
                   </div>
 
                   <div>
                     <button
-                      class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full mt-5"
-                      onClick={() => setShowModal(false)}
+                      className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full mt-5"
+                      onClick={createNewBoard}
                     >
                       Create Board
                     </button>
