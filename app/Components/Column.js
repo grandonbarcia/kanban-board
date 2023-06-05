@@ -20,7 +20,12 @@ export default function Column({ column, tasks }) {
             {...provided.droppableProps}
           >
             {tasks.map((task, index) => (
-              <Task key={task.id} task={task} index={index} />
+              <Task
+                key={task.id}
+                task={task}
+                index={index}
+                subtasks={task.subtasks}
+              />
             ))}
             {provided.placeholder}
           </div>
