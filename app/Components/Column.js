@@ -19,14 +19,17 @@ export default function Column({ column, tasks }) {
             ref={provided.innerRef}
             {...provided.droppableProps}
           >
-            {tasks.map((task, index) => (
-              <Task
-                key={task.id}
-                task={task}
-                index={index}
-                subtasks={task.subtasks}
-              />
-            ))}
+            {tasks.map((task, index) => {
+              return (
+                <Task
+                  key={task.id}
+                  task={task}
+                  index={index}
+                  subtasks={task.subtasks}
+                  subtasksComplete={task.subtasksComplete}
+                />
+              );
+            })}
             {provided.placeholder}
           </div>
         )}

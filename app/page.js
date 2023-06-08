@@ -95,6 +95,7 @@ export default function Home() {
                 const tasks = column.taskIds.map(
                   (taskId) => data.tasks[taskId]
                 );
+
                 return <Column key={column.id} column={column} tasks={tasks} />;
               })}
             </div>

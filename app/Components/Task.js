@@ -5,8 +5,7 @@ import { useState } from 'react';
 const bgWhite = 'p-2 mb-2 border-2 bg-white ';
 const bgGreen = 'p-2 mb-2 border-2 bg-green-400 ';
 
-export default function Task({ task, index, subtasks }) {
-  const numOfSubtasks = Object.keys(subtasks).length;
+export default function Task({ task, index }) {
   const [showModal, setShowModal] = useState(false);
 
   return (
@@ -22,7 +21,7 @@ export default function Task({ task, index, subtasks }) {
             <div className="flex justify-between ">
               <div>
                 <div>{task.title}</div>
-                <div>0/{numOfSubtasks} Subtasks</div>
+                <div></div>
               </div>
               <div className="my-auto">
                 <button
@@ -85,7 +84,6 @@ export default function Task({ task, index, subtasks }) {
               <div>
                 <h2>{task.content}</h2>
               </div>
-              <div>Subtasks (0/{numOfSubtasks})</div>
             </div>
           </div>
 
