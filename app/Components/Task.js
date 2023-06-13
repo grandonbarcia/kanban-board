@@ -5,7 +5,13 @@ import { useState } from 'react';
 const bgWhite = 'p-2 mb-2 border-2 bg-white ';
 const bgGreen = 'p-2 mb-2 border-2 bg-green-400 ';
 
-export default function Task({ task, index }) {
+export default function Task({
+  task,
+  index,
+  subtasks,
+  subtasksIds,
+  subtasksComplete,
+}) {
   const [showModal, setShowModal] = useState(false);
 
   return (
@@ -81,8 +87,57 @@ export default function Task({ task, index }) {
                   </svg>
                 </button>
               </div>
-              <div>
+              <div className="pb-5">
                 <h2>{task.content}</h2>
+              </div>
+              <div className="pb-3">
+                Subtasks {subtasksComplete} / {subtasksIds.length}
+              </div>
+
+              <div>
+                {subtasksIds.map((subtask) => {
+                  const content = subtasks[subtask].content;
+                  const complete = subtasks[subtask].complete;
+
+                  return (
+                    <div class="flex items-center mb-4 ">
+                      <input
+                        id="default-checkbox"
+                        type="checkbox"
+                        value=""
+                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                      />
+                      <label
+                        for="default-checkbox"
+                        class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                      >
+                        {content}
+                      </label>
+                    </div>
+                    // <div>
+                    //   {content}
+                    //   {complete ? 'true' : 'false'}
+                    // </div>
+                  );
+                })}
+              </div>
+              <div>
+                <div>
+                  <label
+                    for="countries"
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >
+                    Status
+                  </label>
+                  <select
+                    id="countries"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  >
+                    <option value="US">To Do</option>
+                    <option value="CA">Doing</option>
+                    <option value="FR">Done</option>
+                  </select>
+                </div>
               </div>
             </div>
           </div>

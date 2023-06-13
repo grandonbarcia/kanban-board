@@ -26,6 +26,7 @@ export default function Column({ column, tasks }) {
                   task={task}
                   index={index}
                   subtasks={task.subtasks}
+                  subtasksIds={task.subtasksIds}
                   subtasksComplete={task.subtasksComplete}
                 />
               );
