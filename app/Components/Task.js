@@ -1,6 +1,6 @@
 import React from 'react';
 import { Draggable } from 'react-beautiful-dnd';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const bgWhite = 'p-2 mb-2 border-2 bg-white ';
 const bgGreen = 'p-2 mb-2 border-2 bg-green-400 ';
@@ -11,8 +11,46 @@ export default function Task({
   subtasks,
   subtasksIds,
   subtasksComplete,
+  data,
+  setData,
 }) {
   const [showModal, setShowModal] = useState(false);
+
+  function handleClick(event, subtask) {
+    const currentStatus = data.tasks[task.id].subtasks[subtask].complete;
+    const newStatus = !currentStatus;
+
+    console.log('Current Status:', currentStatus);
+    console.log('New Status', newStatus);
+    if (event.target.checked) {
+      console.log('checked');
+    } else {
+      console.log('unchecked');
+    }
+    console.log(newStatus);
+
+    const newState = {
+      ...data,
+      tasks: {
+        ...data.tasks,
+        [task.id]: {
+          ...data.tasks[task.id],
+          subtasks: {
+            ...data.tasks[task.id].subtasks,
+            [subtask]: {
+              ...data.tasks[task.id].subtasks[subtask],
+              complete: newStatus,
+            },
+          },
+        },
+      },
+    };
+
+    console.log(data);
+    console.log(newState);
+
+    setData(newState);
+  }
 
   return (
     <>
@@ -32,23 +70,23 @@ export default function Task({
               <div className="my-auto">
                 <button
                   type="button"
-                  class="text-blue-700 border border-blue-700 hover:bg-blue-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:focus:ring-blue-800 dark:hover:bg-blue-500"
+                  className="text-blue-700 border border-blue-700 hover:bg-blue-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:focus:ring-blue-800 dark:hover:bg-blue-500"
                   onClick={() => setShowModal(true)}
                 >
                   <svg
                     aria-hidden="true"
-                    class="w-5 h-5"
+                    className="w-5 h-5"
                     fill="currentColor"
                     viewBox="0 0 20 20"
                     xmlns="http://www.w3.org/2000/svg"
                   >
                     <path
-                      fill-rule="evenodd"
+                      fillRule="evenodd"
                       d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-                      clip-rule="evenodd"
+                      clipRule="evenodd"
                     ></path>
                   </svg>
-                  <span class="sr-only">Icon description</span>
+                  <span className="sr-only">Icon description</span>
                 </button>
               </div>
             </div>
@@ -61,17 +99,17 @@ export default function Task({
             <div className="relative w-1/3 my-6 bg-white p-6 rounded">
               {/*content*/}
 
-              <div className="flex justify-between leading-9 text-xl font-bold">
+              <div className="flex justify-between leading-9 text-2xl font-bold mb-5">
                 <h1>{task.title}</h1>
                 <button
                   type="button"
-                  class="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+                  className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
                   onClick={() => setShowModal(false)}
                 >
-                  <span class="sr-only">Close menu</span>
+                  <span className="sr-only">Close menu</span>
 
                   <svg
-                    class="h-6 w-6"
+                    className="h-6 w-6"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
@@ -100,16 +138,20 @@ export default function Task({
                   const complete = subtasks[subtask].complete;
 
                   return (
-                    <div class="flex items-center mb-4 ">
+                    <div
+                      className="flex items-center mb-4 p-3 bg-slate-200 "
+                      key={subtask}
+                    >
                       <input
                         id="default-checkbox"
                         type="checkbox"
                         value=""
-                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                        onClick={() => handleClick(event, subtask, task)}
+                        className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                       />
                       <label
                         for="default-checkbox"
-                        class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                        className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                       >
                         {content}
                       </label>
@@ -125,13 +167,13 @@ export default function Task({
                 <div>
                   <label
                     for="countries"
-                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
                     Status
                   </label>
                   <select
                     id="countries"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   >
                     <option value="US">To Do</option>
                     <option value="CA">Doing</option>

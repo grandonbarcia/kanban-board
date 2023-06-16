@@ -96,7 +96,15 @@ export default function Home() {
                   (taskId) => data.tasks[taskId]
                 );
 
-                return <Column key={column.id} column={column} tasks={tasks} />;
+                return (
+                  <Column
+                    key={column.id}
+                    column={column}
+                    tasks={tasks}
+                    data={data}
+                    setData={setData}
+                  />
+                );
               })}
             </div>
           </DragDropContext>

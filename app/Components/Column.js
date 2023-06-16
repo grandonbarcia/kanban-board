@@ -5,7 +5,7 @@ import Task from './Task';
 import { Droppable } from 'react-beautiful-dnd';
 import { useRef } from 'react';
 
-export default function Column({ column, tasks }) {
+export default function Column({ column, tasks, data, setData }) {
   return (
     <div className="flex flex-col m-8  rounded w-96">
       <div className="p-8">{column.title}</div>
@@ -28,6 +28,8 @@ export default function Column({ column, tasks }) {
                   subtasks={task.subtasks}
                   subtasksIds={task.subtasksIds}
                   subtasksComplete={task.subtasksComplete}
+                  data={data}
+                  setData={setData}
                 />
               );
             })}
