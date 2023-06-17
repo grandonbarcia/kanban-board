@@ -5,6 +5,11 @@ import { useState, useEffect } from 'react';
 const bgWhite = 'p-2 mb-2 border-2 bg-white ';
 const bgGreen = 'p-2 mb-2 border-2 bg-green-400 ';
 
+const lineThrough =
+  'ml-2 text-sm font-medium text-gray-900 dark:text-gray-300 line-through';
+const noLineThrough =
+  'ml-2 text-sm font-medium text-gray-900 dark:text-gray-300';
+
 export default function Task({
   task,
   index,
@@ -19,15 +24,6 @@ export default function Task({
   function handleClick(event, subtask) {
     const currentStatus = data.tasks[task.id].subtasks[subtask].complete;
     const newStatus = !currentStatus;
-
-    console.log('Current Status:', currentStatus);
-    console.log('New Status', newStatus);
-    if (event.target.checked) {
-      console.log('checked');
-    } else {
-      console.log('unchecked');
-    }
-    console.log(newStatus);
 
     const newState = {
       ...data,
@@ -45,9 +41,6 @@ export default function Task({
         },
       },
     };
-
-    console.log(data);
-    console.log(newState);
 
     setData(newState);
   }
@@ -148,10 +141,12 @@ export default function Task({
                         value=""
                         onClick={() => handleClick(event, subtask, task)}
                         className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                        checked={complete}
+                        onChange={(e) => {}}
                       />
                       <label
                         for="default-checkbox"
-                        className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                        className={complete ? lineThrough : noLineThrough}
                       >
                         {content}
                       </label>
