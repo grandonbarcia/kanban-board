@@ -24,6 +24,16 @@ export default function Task({
   function handleClick(event, subtask) {
     const currentStatus = data.tasks[task.id].subtasks[subtask].complete;
     const newStatus = !currentStatus;
+    let count = data.tasks[task.id].subtasksComplete;
+    if (newStatus) count++;
+
+    if (!newStatus) {
+      if (count !== 0) {
+        count--;
+      }
+    }
+
+    console.log(count);
 
     const newState = {
       ...data,
@@ -31,6 +41,7 @@ export default function Task({
         ...data.tasks,
         [task.id]: {
           ...data.tasks[task.id],
+          subtasksComplete: count,
           subtasks: {
             ...data.tasks[task.id].subtasks,
             [subtask]: {
