@@ -1,7 +1,7 @@
 'use client';
 
 import { DragDropContext } from 'react-beautiful-dnd';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import initialData from './initial-data';
 import Image from 'next/image';
@@ -10,7 +10,9 @@ import Modal from './Components/Modal';
 import SideBar from './Components/SideBar';
 
 export default function Home() {
-  const [data, setData] = useState(initialData);
+  const [data, setData] = useState(
+    JSON.parse(localStorage.getItem('data')) || initialData
+  );
 
   function onDragEnd(result) {
     // Reorder our column
@@ -74,6 +76,10 @@ export default function Home() {
     };
     setData(newState);
   }
+
+  useEffect(() => {
+    localStorage.setItem('data', JSON.stringify(data));
+  }, [data]);
 
   return (
     <>

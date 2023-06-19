@@ -3,6 +3,31 @@ import { useState } from 'react';
 
 export default function Modal() {
   const [showModal, setShowModal] = useState(false);
+  const [subtasksFields, addSubtaskField] = useState([
+    'subtask-1',
+    'subtask-2',
+  ]);
+
+  function handleClick() {
+    addSubtaskField((prevFields) => [
+      ...prevFields,
+      'subtask-' + (subtasksFields.length + 1),
+    ]);
+  }
+
+  function SubTasksFields() {
+    return (
+      <div className="flex">
+        <input
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-2"
+          id="title"
+          type="text"
+          placeholder="e.g Take Coffee Break"
+        />
+        <h1>X</h1>
+      </div>
+    );
+  }
   return (
     <>
       <button
@@ -79,26 +104,16 @@ export default function Modal() {
                 >
                   Subtasks
                 </label>
-                <div className="flex">
-                  <input
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-2"
-                    id="title"
-                    type="text"
-                    placeholder="e.g Take Coffee Break"
-                  />
-                  <h1>X</h1>
-                </div>
-                <div className="flex">
-                  <input
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-2"
-                    id="title"
-                    type="text"
-                    placeholder="e.g Take Coffee Break"
-                  />
-                  <h1>X</h1>
-                </div>
+
+                {subtasksFields.map((field, index) => {
+                  return <SubTasksFields key={subtasksFields[index]} />;
+                })}
+
                 <div>
-                  <button class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full  mt-3">
+                  <button
+                    onClick={handleClick}
+                    class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full  mt-3"
+                  >
                     + Add Subtask
                   </button>
                 </div>
