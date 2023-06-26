@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function Modal() {
   const [showModal, setShowModal] = useState(false);
@@ -8,6 +8,9 @@ export default function Modal() {
     'subtask-2',
   ]);
 
+  const [formData, setFormData] = useState({});
+  const [subtaskData, setSubtaskData] = useState({});
+
   function handleClick() {
     addSubtaskField((prevFields) => [
       ...prevFields,
@@ -15,7 +18,17 @@ export default function Modal() {
     ]);
   }
 
-  function SubTasksFields() {
+  function handleFormChange(e, property) {
+    setFormData((prevFormData) => {
+      return { ...prevFormData, [property]: e.target.value };
+    });
+  }
+
+  useEffect(() => {
+    console.log(formData);
+  }, [formData]);
+
+  function SubTasksFields({ index }) {
     return (
       <div className="flex">
         <input
@@ -23,6 +36,7 @@ export default function Modal() {
           id="title"
           type="text"
           placeholder="e.g Take Coffee Break"
+          onChange={(e) => handleFormChange(e, 'subtask-' + (index + 1))}
         />
         <h1>X</h1>
       </div>
@@ -81,6 +95,7 @@ export default function Modal() {
                   id="title"
                   type="text"
                   placeholder="e.g Take Coffee Break"
+                  onChange={(e) => handleFormChange(e, 'title')}
                 />
               </div>
               <div>
@@ -91,6 +106,7 @@ export default function Modal() {
                   Description
                 </label>
                 <textarea
+                  onChange={(e) => handleFormChange(e, 'description')}
                   id="description"
                   rows="4"
                   class="block p-2.5 w-full text-sm shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -106,7 +122,9 @@ export default function Modal() {
                 </label>
 
                 {subtasksFields.map((field, index) => {
-                  return <SubTasksFields key={subtasksFields[index]} />;
+                  return (
+                    <SubTasksFields key={subtasksFields[index]} index={index} />
+                  );
                 })}
 
                 <div>
