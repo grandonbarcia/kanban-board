@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 
-export default function Modal() {
+export default function Modal({ data, setData }) {
   const [showModal, setShowModal] = useState(false);
   const [subtasksFields, addSubtaskField] = useState([
     'subtask-1',
@@ -18,30 +18,70 @@ export default function Modal() {
     ]);
   }
 
+  function isSubtask(property) {
+    const subtask = 'subtask';
+    const thisProperty = property.substring(0, 7);
+    return subtask === thisProperty ? true : false;
+  }
+
   function handleFormChange(e, property) {
     setFormData((prevFormData) => {
-      return { ...prevFormData, [property]: e.target.value };
+      if (isSubtask(property)) {
+        return {
+          ...prevFormData,
+          subtasks: {
+            ...prevFormData.subtasks,
+            [property]: { content: e.target.value, compelete: false },
+          },
+        };
+      } else {
+        return { ...prevFormData, [property]: e.target.value };
+      }
     });
   }
 
-  useEffect(() => {
-    console.log(formData);
-  }, [formData]);
+  function addNewTask() {
+    const newTaskID = 'task-' + (Object.keys(data.tasks).length + 1);
 
-  function SubTasksFields({ index }) {
-    return (
-      <div className="flex">
-        <input
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-2"
-          id="title"
-          type="text"
-          placeholder="e.g Take Coffee Break"
-          onChange={(e) => handleFormChange(e, 'subtask-' + (index + 1))}
-        />
-        <h1>X</h1>
-      </div>
-    );
+    const newTask = {
+      ...formData,
+      id: newTaskID,
+      subtasksComplete: 0,
+      subtasksIds: [...subtasksFields],
+    };
+
+    const newTaskIdList = [...data.columns['column-1'].taskIds];
+
+    newTaskIdList.push(newTaskID);
+
+    console.log(data.columns['column-1'].taskIds);
+    console.log(newTaskIdList);
+
+    setData((prevData) => {
+      return {
+        ...prevData,
+        tasks: { ...prevData.tasks, [newTaskID]: { ...newTask } },
+        columns: {
+          ...prevData.columns,
+          ['column-1']: {
+            ...prevData.columns['column-1'],
+            taskIds: [...newTaskIdList],
+          },
+        },
+      };
+    });
+
+    // setFormData((prevFormData) => {
+    //   return {
+    //     ...prevFormData,
+    //   };
+    // });
   }
+
+  // useEffect(() => {
+  //   console.log(formData);
+  // }, [formData]);
+
   return (
     <>
       <button
@@ -60,13 +100,13 @@ export default function Modal() {
                 <h1>Add New Task</h1>
                 <button
                   type="button"
-                  class="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+                  className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
                   onClick={() => setShowModal(false)}
                 >
-                  <span class="sr-only">Close menu</span>
+                  <span className="sr-only">Close menu</span>
 
                   <svg
-                    class="h-6 w-6"
+                    className="h-6 w-6"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
@@ -100,16 +140,16 @@ export default function Modal() {
               </div>
               <div>
                 <label
-                  for="description"
+                  for="content"
                   className="block text-gray-700 text-sm font-bold mb-2 pt-5"
                 >
                   Description
                 </label>
                 <textarea
-                  onChange={(e) => handleFormChange(e, 'description')}
-                  id="description"
+                  onChange={(e) => handleFormChange(e, 'content')}
+                  id="content"
                   rows="4"
-                  class="block p-2.5 w-full text-sm shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  className="block p-2.5 w-full text-sm shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   placeholder="e.g It is always good to take a 15 minute break. This break will recharge the batteries a little"
                 ></textarea>
               </div>
@@ -123,14 +163,25 @@ export default function Modal() {
 
                 {subtasksFields.map((field, index) => {
                   return (
-                    <SubTasksFields key={subtasksFields[index]} index={index} />
+                    <div className="flex" key={subtasksFields[index]}>
+                      <input
+                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-2"
+                        id={'subtask-' + (index + 1)}
+                        type="text"
+                        onChange={(e) =>
+                          handleFormChange(e, 'subtask-' + (index + 1))
+                        }
+                      />
+                      <h1>X</h1>
+                    </div>
+                    // <SubTasksFields key={subtasksFields[index]} index={index} />
                   );
                 })}
 
                 <div>
                   <button
                     onClick={handleClick}
-                    class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full  mt-3"
+                    className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full  mt-3"
                   >
                     + Add Subtask
                   </button>
@@ -153,8 +204,8 @@ export default function Modal() {
                 </div>
                 <div>
                   <button
-                    class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full mt-5"
-                    onClick={() => setShowModal(false)}
+                    className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full mt-5"
+                    onClick={() => addNewTask()}
                   >
                     Create Task
                   </button>

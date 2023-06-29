@@ -78,7 +78,7 @@ export default function Home() {
   }
 
   useEffect(() => {
-    localStorage.setItem('data', JSON.stringify(data));
+    console.log(data);
   }, [data]);
 
   return (
@@ -89,7 +89,7 @@ export default function Home() {
           <div className="flex justify-between p-11 border-b-4">
             <div className="text-2xl">Platform Launch</div>
             <div className="flex items-center">
-              <Modal />
+              <Modal data={data} setData={setData} />
               <BsThreeDotsVertical size={32} />
             </div>
           </div>
