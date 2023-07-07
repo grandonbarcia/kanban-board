@@ -79,6 +79,7 @@ export default function Home() {
 
   useEffect(() => {
     console.log(data);
+    localStorage.setItem('data', JSON.stringify(data));
   }, [data]);
 
   return (
