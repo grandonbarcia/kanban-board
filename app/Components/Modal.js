@@ -71,16 +71,8 @@ export default function Modal({ data, setData }) {
       };
     });
 
-    // setFormData((prevFormData) => {
-    //   return {
-    //     ...prevFormData,
-    //   };
-    // });
+    setShowModal(false);
   }
-
-  // useEffect(() => {
-  //   console.log(formData);
-  // }, [formData]);
 
   return (
     <>
