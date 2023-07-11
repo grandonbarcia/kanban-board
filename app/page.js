@@ -1,7 +1,7 @@
 'use client';
 
 import { DragDropContext } from 'react-beautiful-dnd';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, use } from 'react';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import initialData from './initial-data';
 import Image from 'next/image';
@@ -78,14 +78,19 @@ export default function Home() {
   }
 
   useEffect(() => {
-    console.log(data);
+    console.log(data.listOfBoards);
     localStorage.setItem('data', JSON.stringify(data));
   }, [data]);
+
+  useEffect(() => {
+    localStorage.setItem('Active Board', JSON.stringify(data.activeBoard));
+    localStorage.setItem('Board Names', JSON.stringify(data.listOfBoardsNames));
+  }, []);
 
   return (
     <>
       <main className="flex">
-        <SideBar />
+        <SideBar listOfBoards={data.listOfBoardsNames} />
         <div className="w-screen">
           <div className="flex justify-between p-11 border-b-4">
             <div className="text-2xl">Platform Launch</div>

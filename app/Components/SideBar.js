@@ -3,34 +3,16 @@ import { BiAbacus } from 'react-icons/bi';
 import { MdOutlineBackupTable } from 'react-icons/md';
 import { useState, useEffect } from 'react';
 import ListOfBoards from './ListOfBoards';
-
-const initialData = {
-  tasks: {},
-  columns: {
-    'column-1': {
-      id: 'column-1',
-      title: 'To do',
-      taskIds: [],
-    },
-    'column-2': {
-      id: 'column-2',
-      title: 'In Progress',
-      taskIds: [],
-    },
-    'column-3': {
-      id: 'column-3',
-      title: 'Done',
-      taskIds: [],
-    },
-  },
-  // Facilitate reordering of the columns
-  columnOrder: ['column-1', 'column-2', 'column-3'],
-};
+import initialData from '../initial-data';
 
 export default function SideBar() {
   const [showModal, setShowModal] = useState(false);
+  const [activeBoard, setActiveBoard] = useState(
+    JSON.parse(localStorage.getItem('Active Board')) || initialData.activeBoard
+  );
   const [boardNames, setBoardNames] = useState(
-    JSON.parse(localStorage.getItem('Board Names')) || []
+    JSON.parse(localStorage.getItem('Board Names')) ||
+      initialData.listOfBoardsNames
   );
   const [value, setValue] = useState('');
 
@@ -58,19 +40,13 @@ export default function SideBar() {
       </div>
       <div className="">
         <div className="flex pl-10 pt-2 pb-2">ALL BOARDS (8)</div>
-        <div className="flex w-11/12 pl-10 pt-2 pb-2 bg-purple-500 text-white rounded-r-3xl">
-          <MdOutlineBackupTable className="mr-2" /> Platform Launch
-        </div>
-        <div className="flex pl-10 pt-2 pb-2">
-          <MdOutlineBackupTable className="mr-2" /> Marketing Plan
-        </div>
-        <div className="flex pl-10 pt-2 pb-2">
-          <MdOutlineBackupTable className="mr-2" /> Roadmap
-        </div>
+
         {boardNames.map((name) => {
-          return <ListOfBoards title={name} key={name} />;
+          return (
+            <ListOfBoards title={name} key={name} activeBoard={activeBoard} />
+          );
         })}
-        <div className=" pl-10 pt-2 pb- text-purple-500">
+        <div className="pl-10 pt-2 pb- text-purple-500">
           <button
             className="flex"
             type="button"
