@@ -13,6 +13,9 @@ export default function Home() {
   const [data, setData] = useState(
     JSON.parse(localStorage.getItem('data')) || initialData
   );
+  const [activeBoard, setActiveBoard] = useState(
+    JSON.parse(localStorage.getItem('Active Board')) || initialData.activeBoard
+  );
 
   function onDragEnd(result) {
     // Reorder our column
@@ -79,7 +82,7 @@ export default function Home() {
 
   useEffect(() => {
     console.log(data.listOfBoards);
-    localStorage.setItem('data', JSON.stringify(data));
+    localStorage.setItem(activeBoard, JSON.stringify(data));
   }, [data]);
 
   useEffect(() => {
@@ -87,13 +90,24 @@ export default function Home() {
     localStorage.setItem('Board Names', JSON.stringify(data.listOfBoardsNames));
   }, []);
 
+  useEffect(() => {
+    localStorage.setItem('Active Board', JSON.stringify(activeBoard));
+    setData((prevData) => {
+      return { ...prevData, activeBoard: activeBoard };
+    });
+  }, [activeBoard]);
+
   return (
     <>
       <main className="flex">
-        <SideBar listOfBoards={data.listOfBoardsNames} />
+        <SideBar
+          listOfBoards={data.listOfBoardsNames}
+          activeBoard={activeBoard}
+          setActiveBoard={setActiveBoard}
+        />
         <div className="w-screen">
           <div className="flex justify-between p-11 border-b-4">
-            <div className="text-2xl">Platform Launch</div>
+            <div className="text-2xl">{activeBoard}</div>
             <div className="flex items-center">
               <Modal data={data} setData={setData} />
               <BsThreeDotsVertical size={32} />

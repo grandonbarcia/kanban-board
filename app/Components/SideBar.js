@@ -5,11 +5,9 @@ import { useState, useEffect } from 'react';
 import ListOfBoards from './ListOfBoards';
 import initialData from '../initial-data';
 
-export default function SideBar() {
+export default function SideBar({ activeBoard, setActiveBoard }) {
   const [showModal, setShowModal] = useState(false);
-  const [activeBoard, setActiveBoard] = useState(
-    JSON.parse(localStorage.getItem('Active Board')) || initialData.activeBoard
-  );
+
   const [boardNames, setBoardNames] = useState(
     JSON.parse(localStorage.getItem('Board Names')) ||
       initialData.listOfBoardsNames
@@ -24,6 +22,8 @@ export default function SideBar() {
     setBoardNames(() => [...boardNames, value]);
     setShowModal(false);
   }
+
+  function switchBoard() {}
 
   useEffect(() => {
     if (!arrayIsEmpty(boardNames) || value === '') return;
@@ -43,7 +43,12 @@ export default function SideBar() {
 
         {boardNames.map((name) => {
           return (
-            <ListOfBoards title={name} key={name} activeBoard={activeBoard} />
+            <ListOfBoards
+              title={name}
+              key={name}
+              activeBoard={activeBoard}
+              setActiveBoard={setActiveBoard}
+            />
           );
         })}
         <div className="pl-10 pt-2 pb- text-purple-500">
