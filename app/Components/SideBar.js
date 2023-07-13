@@ -5,13 +5,14 @@ import { useState, useEffect } from 'react';
 import ListOfBoards from './ListOfBoards';
 import initialData from '../initial-data';
 
-export default function SideBar({ activeBoard, setActiveBoard }) {
+export default function SideBar({
+  activeBoard,
+  setActiveBoard,
+  boardNames,
+  setBoardNames,
+}) {
   const [showModal, setShowModal] = useState(false);
 
-  const [boardNames, setBoardNames] = useState(
-    JSON.parse(localStorage.getItem('Board Names')) ||
-      initialData.listOfBoardsNames
-  );
   const [value, setValue] = useState('');
 
   function arrayIsEmpty(arr) {

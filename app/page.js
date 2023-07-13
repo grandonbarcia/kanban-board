@@ -4,18 +4,28 @@ import { DragDropContext } from 'react-beautiful-dnd';
 import { useState, useEffect, use } from 'react';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import initialData from './initial-data';
+import platformLaunch from './Initial-Data/platform-launch';
+import roadMap from './Initial-Data/road-map';
+import marketingPlan from './Initial-Data/marketing-plan';
 import Image from 'next/image';
 import Column from './Components/Column';
 import Modal from './Components/Modal';
 import SideBar from './Components/SideBar';
 
 export default function Home() {
-  const [data, setData] = useState(
-    JSON.parse(localStorage.getItem('data')) || initialData
-  );
   const [activeBoard, setActiveBoard] = useState(
-    JSON.parse(localStorage.getItem('Active Board')) || initialData.activeBoard
+    JSON.parse(localStorage.getItem('Active Board')) || 'Platform Launch'
   );
+
+  const [data, setData] = useState(
+    JSON.parse(localStorage.getItem(activeBoard)) || initialData
+  );
+
+  const [boardNames, setBoardNames] = useState([
+    'Platform Launch',
+    'Marketing Plan',
+    'Road Map',
+  ]);
 
   function onDragEnd(result) {
     // Reorder our column
@@ -92,9 +102,8 @@ export default function Home() {
 
   useEffect(() => {
     localStorage.setItem('Active Board', JSON.stringify(activeBoard));
-    setData((prevData) => {
-      return { ...prevData, activeBoard: activeBoard };
-    });
+    const newBoard = JSON.parse(localStorage.getItem(activeBoard));
+    setData({ ...newBoard, activeBoard: activeBoard });
   }, [activeBoard]);
 
   return (
@@ -104,6 +113,8 @@ export default function Home() {
           listOfBoards={data.listOfBoardsNames}
           activeBoard={activeBoard}
           setActiveBoard={setActiveBoard}
+          boardNames={boardNames}
+          setBoardNames={setBoardNames}
         />
         <div className="w-screen">
           <div className="flex justify-between p-11 border-b-4">
