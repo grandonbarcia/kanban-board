@@ -4,6 +4,7 @@ import { MdOutlineBackupTable } from 'react-icons/md';
 import { useState, useEffect } from 'react';
 import ListOfBoards from './ListOfBoards';
 import initialData from '../initial-data';
+import emptyBoard from '../Initial-Data/empty-board';
 
 export default function SideBar({
   activeBoard,
@@ -20,18 +21,15 @@ export default function SideBar({
   }
 
   function createNewBoard() {
-    setBoardNames(() => [...boardNames, value]);
+    localStorage.setItem(value, JSON.stringify(emptyBoard));
+    setBoardNames((prevBoardNames) => [...prevBoardNames, value]);
     setShowModal(false);
   }
 
-  function switchBoard() {}
-
   useEffect(() => {
-    if (!arrayIsEmpty(boardNames) || value === '') return;
-
-    localStorage.setItem('Board Names', JSON.stringify(boardNames));
-    localStorage.setItem(value, JSON.stringify(initialData));
     console.log(boardNames);
+    if (!arrayIsEmpty(boardNames) || value === '') return;
+    localStorage.setItem('Board Names', JSON.stringify(boardNames));
   }, [boardNames]);
 
   return (

@@ -12,6 +12,12 @@ import Column from './Components/Column';
 import Modal from './Components/Modal';
 import SideBar from './Components/SideBar';
 
+const default_database = {
+  'Marketing Plan': marketingPlan,
+  'Platform Launch': platformLaunch,
+  'Road Map': roadMap,
+};
+
 export default function Home() {
   const [activeBoard, setActiveBoard] = useState(
     JSON.parse(localStorage.getItem('Active Board')) || 'Platform Launch'
@@ -21,11 +27,13 @@ export default function Home() {
     JSON.parse(localStorage.getItem(activeBoard)) || initialData
   );
 
-  const [boardNames, setBoardNames] = useState([
-    'Platform Launch',
-    'Marketing Plan',
-    'Road Map',
-  ]);
+  const [boardNames, setBoardNames] = useState(
+    JSON.parse(localStorage.getItem('Board Names')) || [
+      'Platform Launch',
+      'Marketing Plan',
+      'Road Map',
+    ]
+  );
 
   function onDragEnd(result) {
     // Reorder our column
@@ -91,13 +99,28 @@ export default function Home() {
   }
 
   useEffect(() => {
-    console.log(data.listOfBoards);
     localStorage.setItem(activeBoard, JSON.stringify(data));
   }, [data]);
 
   useEffect(() => {
-    localStorage.setItem('Active Board', JSON.stringify(data.activeBoard));
-    localStorage.setItem('Board Names', JSON.stringify(data.listOfBoardsNames));
+    if (!localStorage.getItem('Active Board')) {
+      localStorage.setItem('Active Board', JSON.stringify(activeBoard));
+    }
+    if (!localStorage.getItem('Board Names')) {
+      localStorage.setItem('Board Names', JSON.stringify(boardNames));
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!localStorage.getItem('Platform Launch')) {
+      localStorage.setItem('Platform Launch', JSON.stringify(platformLaunch));
+    }
+    if (!localStorage.getItem('Marketing Plan')) {
+      localStorage.setItem('Marketing Plan', JSON.stringify(marketingPlan));
+    }
+    if (!localStorage.getItem('Road Map')) {
+      localStorage.setItem('Road Map', JSON.stringify(roadMap));
+    }
   }, []);
 
   useEffect(() => {
@@ -110,7 +133,6 @@ export default function Home() {
     <>
       <main className="flex">
         <SideBar
-          listOfBoards={data.listOfBoardsNames}
           activeBoard={activeBoard}
           setActiveBoard={setActiveBoard}
           boardNames={boardNames}
