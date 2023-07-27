@@ -3,13 +3,16 @@ import { useState, useEffect } from 'react';
 
 export default function Modal({ data, setData }) {
   const [showModal, setShowModal] = useState(false);
+  const [formData, setFormData] = useState({});
+  const [subtaskData, setSubtaskData] = useState({});
   const [subtasksFields, addSubtaskField] = useState([
     'subtask-1',
     'subtask-2',
   ]);
 
-  const [formData, setFormData] = useState({});
-  const [subtaskData, setSubtaskData] = useState({});
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const [subtasks, setSubtasks] = useState({});
 
   function handleClick() {
     addSubtaskField((prevFields) => [
@@ -40,22 +43,51 @@ export default function Modal({ data, setData }) {
     });
   }
 
+  function handleTitle(e) {
+    setTitle(e.target.value);
+  }
+
+  function handleDescription(e) {
+    setDescription(e.target.value);
+  }
+
+  function handleSubtasks(e, property) {
+    const value = e.target.value;
+
+    if (value.length === 0) {
+      setSubtasks((prevSubtasks) => {
+        const currentData = { ...prevSubtasks };
+        delete prevSubtasks[property];
+        return { ...prevSubtasks };
+      });
+    } else {
+      setSubtasks((prevSubtasks) => {
+        return {
+          ...prevSubtasks,
+          [property]: { content: value, complete: false },
+        };
+      });
+    }
+  }
+
   function addNewTask() {
     const newTaskID = 'task-' + (Object.keys(data.tasks).length + 1);
+    const subtasksID = Object.keys(subtasks);
 
     const newTask = {
-      ...formData,
+      title: title,
+      content: description,
+      subtasks: { ...subtasks },
       id: newTaskID,
       subtasksComplete: 0,
-      subtasksIds: [...subtasksFields],
+      subtasksIds: [...subtasksID],
     };
 
     const newTaskIdList = [...data.columns['column-1'].taskIds];
 
     newTaskIdList.push(newTaskID);
 
-    console.log(data.columns['column-1'].taskIds);
-    console.log(newTaskIdList);
+    console.log(newTask);
 
     setData((prevData) => {
       return {
@@ -127,7 +159,7 @@ export default function Modal({ data, setData }) {
                   id="title"
                   type="text"
                   placeholder="e.g Take Coffee Break"
-                  onChange={(e) => handleFormChange(e, 'title')}
+                  onChange={(e) => handleTitle(e)}
                 />
               </div>
               <div>
@@ -138,7 +170,7 @@ export default function Modal({ data, setData }) {
                   Description
                 </label>
                 <textarea
-                  onChange={(e) => handleFormChange(e, 'content')}
+                  onChange={(e) => handleDescription(e)}
                   id="content"
                   rows="4"
                   className="block p-2.5 w-full text-sm shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -161,7 +193,7 @@ export default function Modal({ data, setData }) {
                         id={'subtask-' + (index + 1)}
                         type="text"
                         onChange={(e) =>
-                          handleFormChange(e, 'subtask-' + (index + 1))
+                          handleSubtasks(e, 'subtask-' + (index + 1))
                         }
                       />
                       <h1>X</h1>
