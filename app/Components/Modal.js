@@ -160,6 +160,7 @@ export default function Modal({ data, setData }) {
                   type="text"
                   placeholder="e.g Take Coffee Break"
                   onChange={(e) => handleTitle(e)}
+                  required
                 />
               </div>
               <div>
@@ -175,6 +176,7 @@ export default function Modal({ data, setData }) {
                   rows="4"
                   className="block p-2.5 w-full text-sm shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   placeholder="e.g It is always good to take a 15 minute break. This break will recharge the batteries a little"
+                  required
                 ></textarea>
               </div>
               <div>

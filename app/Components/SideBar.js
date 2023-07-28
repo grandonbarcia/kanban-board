@@ -13,6 +13,7 @@ export default function SideBar({
   setBoardNames,
 }) {
   const [showModal, setShowModal] = useState(false);
+  const [showError, setShowError] = useState(false);
 
   const [value, setValue] = useState('');
 
@@ -21,9 +22,15 @@ export default function SideBar({
   }
 
   function createNewBoard() {
-    localStorage.setItem(value, JSON.stringify(emptyBoard));
-    setBoardNames((prevBoardNames) => [...prevBoardNames, value]);
-    setShowModal(false);
+    if (value.length === 0) {
+      setShowError(true);
+    } else {
+      setShowError(false);
+      localStorage.setItem(value, JSON.stringify(emptyBoard));
+      setBoardNames((prevBoardNames) => [...prevBoardNames, value]);
+      setValue('');
+      setShowModal(false);
+    }
   }
 
   useEffect(() => {
@@ -31,6 +38,14 @@ export default function SideBar({
     if (!arrayIsEmpty(boardNames) || value === '') return;
     localStorage.setItem('Board Names', JSON.stringify(boardNames));
   }, [boardNames]);
+
+  function ErrorMessage() {
+    return (
+      <div className="pt-3 pl-1 text-red-600">
+        * Please fill out this field *
+      </div>
+    );
+  }
 
   return (
     <div className="h-screen w-1/6 border-r-4">
@@ -107,6 +122,7 @@ export default function SideBar({
                         setValue(e.currentTarget.value);
                       }}
                     />
+                    {showError ? <ErrorMessage /> : null}
                   </div>
 
                   <div>
