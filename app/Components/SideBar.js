@@ -17,7 +17,7 @@ export default function SideBar({
 
   const [value, setValue] = useState('');
 
-  function arrayIsEmpty(arr) {
+  function isEmpty(arr) {
     return arr.length ? true : false;
   }
 
@@ -35,7 +35,7 @@ export default function SideBar({
 
   useEffect(() => {
     console.log(boardNames);
-    if (!arrayIsEmpty(boardNames) || value === '') return;
+    if (!isEmpty(boardNames) || value === '') return;
     localStorage.setItem('Board Names', JSON.stringify(boardNames));
   }, [boardNames]);
 

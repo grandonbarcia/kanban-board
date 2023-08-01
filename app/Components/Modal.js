@@ -3,16 +3,16 @@ import { useState, useEffect } from 'react';
 
 export default function Modal({ data, setData }) {
   const [showModal, setShowModal] = useState(false);
-  const [formData, setFormData] = useState({});
-  const [subtaskData, setSubtaskData] = useState({});
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const [subtasks, setSubtasks] = useState({});
   const [subtasksFields, addSubtaskField] = useState([
     'subtask-1',
     'subtask-2',
   ]);
 
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [subtasks, setSubtasks] = useState({});
+  const [showTitleError, setShowTitleError] = useState(false);
+  const [showContentError, setShowContentError] = useState(false);
 
   function handleClick() {
     addSubtaskField((prevFields) => [
@@ -27,28 +27,20 @@ export default function Modal({ data, setData }) {
     return subtask === thisProperty ? true : false;
   }
 
-  function handleFormChange(e, property) {
-    setFormData((prevFormData) => {
-      if (isSubtask(property)) {
-        return {
-          ...prevFormData,
-          subtasks: {
-            ...prevFormData.subtasks,
-            [property]: { content: e.target.value, compelete: false },
-          },
-        };
-      } else {
-        return { ...prevFormData, [property]: e.target.value };
-      }
-    });
-  }
-
   function handleTitle(e) {
     setTitle(e.target.value);
   }
 
   function handleDescription(e) {
     setDescription(e.target.value);
+  }
+
+  function ErrorMessage() {
+    return (
+      <div className="pt-3 pl-1 text-red-600">
+        * Please fill out this field *
+      </div>
+    );
   }
 
   function handleSubtasks(e, property) {
@@ -74,6 +66,22 @@ export default function Modal({ data, setData }) {
     const newTaskID = 'task-' + (Object.keys(data.tasks).length + 1);
     const subtasksID = Object.keys(subtasks);
 
+    if (title.length === 0) {
+      setShowTitleError(true);
+    } else {
+      setShowTitleError(false);
+    }
+
+    if (description.length === 0) {
+      setShowContentError(true);
+    } else {
+      setShowContentError(false);
+    }
+
+    if (title.length === 0 || description.length === 0) {
+      return;
+    }
+
     const newTask = {
       title: title,
       content: description,
@@ -86,8 +94,6 @@ export default function Modal({ data, setData }) {
     const newTaskIdList = [...data.columns['column-1'].taskIds];
 
     newTaskIdList.push(newTaskID);
-
-    console.log(newTask);
 
     setData((prevData) => {
       return {
@@ -104,6 +110,10 @@ export default function Modal({ data, setData }) {
     });
 
     setShowModal(false);
+    setTitle('');
+    setDescription('');
+    setSubtasks({});
+    addSubtaskField(['subtask-1', 'subtask-2']);
   }
 
   return (
@@ -125,7 +135,10 @@ export default function Modal({ data, setData }) {
                 <button
                   type="button"
                   className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
-                  onClick={() => setShowModal(false)}
+                  onClick={() => {
+                    addSubtaskField(['subtask-1', 'subtask-2']);
+                    setShowModal(false);
+                  }}
                 >
                   <span className="sr-only">Close menu</span>
 
@@ -154,6 +167,7 @@ export default function Modal({ data, setData }) {
                 >
                   Title
                 </label>
+
                 <input
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   id="title"
@@ -162,6 +176,7 @@ export default function Modal({ data, setData }) {
                   onChange={(e) => handleTitle(e)}
                   required
                 />
+                {showTitleError ? <ErrorMessage /> : null}
               </div>
               <div>
                 <label
@@ -178,6 +193,7 @@ export default function Modal({ data, setData }) {
                   placeholder="e.g It is always good to take a 15 minute break. This break will recharge the batteries a little"
                   required
                 ></textarea>
+                {showContentError ? <ErrorMessage /> : null}
               </div>
               <div>
                 <label
