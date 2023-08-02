@@ -21,6 +21,14 @@ export default function Task({
 }) {
   const [showModal, setShowModal] = useState(false);
 
+  function Subtasks() {
+    return (
+      <div>
+        Subtasks {subtasksComplete} / {subtasksIds.length}
+      </div>
+    );
+  }
+
   function handleClick(event, subtask) {
     const currentStatus = data.tasks[task.id].subtasks[subtask].complete;
     const newStatus = !currentStatus;
@@ -133,7 +141,7 @@ export default function Task({
                 <h2>{task.content}</h2>
               </div>
               <div className="pb-3">
-                Subtasks {subtasksComplete} / {subtasksIds.length}
+                {subtasksIds.length != 0 ? <Subtasks /> : null}
               </div>
 
               <div>
