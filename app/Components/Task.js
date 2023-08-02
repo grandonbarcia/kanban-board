@@ -21,10 +21,18 @@ export default function Task({
 }) {
   const [showModal, setShowModal] = useState(false);
 
-  function Subtasks() {
+  function SubtasksTrackerForModal() {
     return (
       <div>
         Subtasks {subtasksComplete} / {subtasksIds.length}
+      </div>
+    );
+  }
+
+  function SubtasksTrackerForColumn() {
+    return (
+      <div>
+        {subtasksComplete} of {subtasksIds.length} subtasks
       </div>
     );
   }
@@ -40,8 +48,6 @@ export default function Task({
         count--;
       }
     }
-
-    console.log(count);
 
     const newState = {
       ...data,
@@ -77,7 +83,11 @@ export default function Task({
             <div className="flex justify-between ">
               <div>
                 <div>{task.title}</div>
-                <div></div>
+                <div>
+                  {subtasksIds.length != 0 ? (
+                    <SubtasksTrackerForColumn />
+                  ) : null}
+                </div>
               </div>
               <div className="my-auto">
                 <button
@@ -141,7 +151,7 @@ export default function Task({
                 <h2>{task.content}</h2>
               </div>
               <div className="pb-3">
-                {subtasksIds.length != 0 ? <Subtasks /> : null}
+                {subtasksIds.length != 0 ? <SubtasksTrackerForModal /> : null}
               </div>
 
               <div>
