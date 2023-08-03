@@ -75,12 +75,13 @@ export default function Task({
       <Draggable draggableId={task.id} index={index}>
         {(provided, snapshot) => (
           <div
-            className={snapshot.isDragging ? bgGreen : bgWhite}
+            // className={snapshot.isDragging ? bgGreen : bgWhite}
+            className="bg-gray-600 text-white p-2 mb-2 border-2 rounded "
             {...provided.draggableProps}
             {...provided.dragHandleProps}
             ref={provided.innerRef}
           >
-            <div className="flex justify-between ">
+            <div className="flex justify-between  ">
               <div>
                 <div>{task.title}</div>
                 <div>
@@ -92,7 +93,7 @@ export default function Task({
               <div className="my-auto">
                 <button
                   type="button"
-                  className="text-blue-700 border border-blue-700 hover:bg-blue-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:focus:ring-blue-800 dark:hover:bg-blue-500"
+                  className="text-white border border-white hover:bg-violet-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:focus:ring-blue-800 dark:hover:bg-blue-500"
                   onClick={() => setShowModal(true)}
                 >
                   <svg

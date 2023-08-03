@@ -138,35 +138,38 @@ export default function Home() {
           boardNames={boardNames}
           setBoardNames={setBoardNames}
         />
-        <div className="w-screen">
-          <div className="flex justify-between p-11 border-b-4">
-            <div className="text-2xl">{activeBoard}</div>
-            <div className="flex items-center">
+        <div className="w-screen ">
+          <div className="flex h-1/6 justify-between  border-b-2  bg-gray-600 text-white p-16">
+            <div className="flex items-center text-3xl  font-semibold">
+              <span>{activeBoard}</span>
+            </div>
+            <div className="flex items-center ">
               <Modal data={data} setData={setData} />
               <BsThreeDotsVertical size={32} />
             </div>
           </div>
+          <div className="h-5/6 bg-gray-800 ">
+            <DragDropContext className="relative " onDragEnd={onDragEnd}>
+              <div className="flex relative ">
+                {data.columnOrder.map((columnId) => {
+                  const column = data.columns[columnId];
+                  const tasks = column.taskIds.map(
+                    (taskId) => data.tasks[taskId]
+                  );
 
-          <DragDropContext className="relative" onDragEnd={onDragEnd}>
-            <div className="flex relative">
-              {data.columnOrder.map((columnId) => {
-                const column = data.columns[columnId];
-                const tasks = column.taskIds.map(
-                  (taskId) => data.tasks[taskId]
-                );
-
-                return (
-                  <Column
-                    key={column.id}
-                    column={column}
-                    tasks={tasks}
-                    data={data}
-                    setData={setData}
-                  />
-                );
-              })}
-            </div>
-          </DragDropContext>
+                  return (
+                    <Column
+                      key={column.id}
+                      column={column}
+                      tasks={tasks}
+                      data={data}
+                      setData={setData}
+                    />
+                  );
+                })}
+              </div>
+            </DragDropContext>
+          </div>
         </div>
       </main>
     </>

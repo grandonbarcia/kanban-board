@@ -48,11 +48,11 @@ export default function SideBar({
   }
 
   return (
-    <div className="h-screen w-1/6 border-r-4">
-      <div className="flex text-3xl font-extrabold p-10 ">
-        <BiAbacus className="mr-2" /> Kanban
+    <div className="h-screen w-1/6 border-r-2 bg-gray-600 text-white">
+      <div className="h-1/6 flex items-center text-3xl font-extrabold p-10 ">
+        <BiAbacus className=" mr-2" /> Kanban
       </div>
-      <div className="">
+      <div className="h-5/6">
         <div className="flex pl-10 pt-2 pb-2">ALL BOARDS (8)</div>
 
         {boardNames.map((name) => {
