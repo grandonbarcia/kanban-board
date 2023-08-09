@@ -53,7 +53,9 @@ export default function SideBar({
         <BiAbacus className=" mr-2" /> Kanban
       </div>
       <div className="h-5/6">
-        <div className="flex pl-10 pt-2 pb-2">ALL BOARDS (8)</div>
+        <div className="flex pl-10 pt-2 pb-2">
+          ALL BOARDS ( {boardNames.length} )
+        </div>
 
         {boardNames.map((name) => {
           return (
@@ -118,7 +120,7 @@ export default function SideBar({
                       Title
                     </label>
                     <input
-                      className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 bg-gray-600 leading-tight focus:outline-none focus:shadow-outline"
+                      className="shadow appearance-none border rounded w-full py-2 px-3 text-white bg-gray-600 leading-tight focus:outline-none focus:shadow-outline"
                       id="title"
                       type="text"
                       placeholder="e.g Project Name"
