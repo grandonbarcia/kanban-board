@@ -48,7 +48,7 @@ export default function SideBar({
   }
 
   return (
-    <div className="h-screen w-1/6 border-r-2 bg-gray-600 text-white">
+    <div className="h-screen w-1/6 border-r bg-gray-600 text-white">
       <div className="h-1/6 flex items-center text-3xl font-extrabold p-10 ">
         <BiAbacus className=" mr-2" /> Kanban
       </div>
@@ -136,7 +136,7 @@ export default function SideBar({
                 </div>
               </div>
 
-              <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+              <div className="opacity-50 fixed inset-0 z-40 bg-black"></div>
             </>
           ) : null}
         </div>

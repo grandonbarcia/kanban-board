@@ -19,14 +19,12 @@ export default function Column({ column, tasks, data, setData }) {
       <div className="flex items-center p-8 text-zinc-400 font-bold">
         <div className={CIRCLE_COLOR[column.title]}></div>
         <div className="pl-5">{column.title.toUpperCase()}</div>
+        <div className="pl-2">( {column.taskIds.length} )</div>
       </div>
       <Droppable droppableId={column.id}>
         {(provided, snapshot) => (
           <div
-            className={
-              'p-8 grow h-96 ' +
-              (snapshot.isDraggingOver ? 'bg-blue-200' : 'bg-white-500')
-            }
+            className={'p-8 grow h-96 '}
             ref={provided.innerRef}
             {...provided.droppableProps}
           >

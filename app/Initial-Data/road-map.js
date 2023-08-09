@@ -2,7 +2,7 @@ const initialData = {
   tasks: {
     'task-1': {
       id: 'task-1',
-      title: ' Figure Out What You Want In Life',
+      title: 'Figure Out What You Want In Life',
       content:
         'Sed ut perspiciatis, unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam eaque ipsa, quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt, explicabo.',
       subtasks: {},
@@ -27,7 +27,7 @@ const initialData = {
     },
     'task-4': {
       id: 'task-4',
-      title: ' Start Setting Goals ',
+      title: 'Start Setting Goals ',
       content:
         'Sed ut perspiciatis, unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam eaque ipsa, quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt, explicabo.',
       subtasks: {},

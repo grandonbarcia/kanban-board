@@ -139,7 +139,7 @@ export default function Home() {
           setBoardNames={setBoardNames}
         />
         <div className="w-screen ">
-          <div className="flex h-1/6 justify-between  border-b-2  bg-gray-600 text-white p-16">
+          <div className="flex h-1/6 justify-between  border-b  bg-gray-600 text-white p-16">
             <div className="flex items-center text-3xl  font-semibold">
               <span>{activeBoard}</span>
             </div>

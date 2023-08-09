@@ -31,7 +31,7 @@ export default function Task({
 
   function SubtasksTrackerForColumn() {
     return (
-      <div>
+      <div className="text-sm">
         {subtasksComplete} of {subtasksIds.length} subtasks
       </div>
     );
@@ -81,9 +81,9 @@ export default function Task({
             {...provided.dragHandleProps}
             ref={provided.innerRef}
           >
-            <div className="flex justify-between  ">
+            <div className="flex justify-between p-3 ">
               <div>
-                <div>{task.title}</div>
+                <div className="text-xl">{task.title}</div>
                 <div>
                   {subtasksIds.length != 0 ? (
                     <SubtasksTrackerForColumn />
