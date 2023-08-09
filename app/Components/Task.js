@@ -118,8 +118,8 @@ export default function Task({
       </Draggable>
       {showModal ? (
         <>
-          <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
-            <div className="relative w-1/3 my-6 bg-white p-6 rounded">
+          <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none ">
+            <div className="relative w-1/3 my-6 text-white bg-gray-600 p-6 rounded ">
               {/*content*/}
 
               <div className="flex justify-between leading-9 text-2xl font-bold mb-5">
@@ -192,7 +192,7 @@ export default function Task({
                 <div>
                   <label
                     for="countries"
-                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    className="block mb-2 text-sm font-medium text-white "
                   >
                     Status
                   </label>

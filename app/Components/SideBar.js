@@ -75,8 +75,8 @@ export default function SideBar({
           </button>
           {showModal ? (
             <>
-              <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
-                <div className="relative w-1/3 my-6 bg-white p-6 rounded">
+              <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none ">
+                <div className="relative w-1/3 my-6 text-white bg-gray-600 p-6 rounded">
                   {/*content*/}
 
                   <div className="flex justify-between leading-9 text-xl font-bold">
@@ -84,7 +84,11 @@ export default function SideBar({
                     <button
                       type="button"
                       class="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
-                      onClick={() => setShowModal(false)}
+                      onClick={() => {
+                        setValue('');
+                        setShowModal(false);
+                        setShowError(false);
+                      }}
                     >
                       <span class="sr-only">Close menu</span>
 
@@ -108,13 +112,13 @@ export default function SideBar({
 
                   <div>
                     <label
-                      className="block text-gray-700 text-sm font-bold mb-2 pt-5"
+                      className="block text-white text-sm font-bold mb-2 pt-5"
                       for="username"
                     >
                       Title
                     </label>
                     <input
-                      className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                      className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 bg-gray-600 leading-tight focus:outline-none focus:shadow-outline"
                       id="title"
                       type="text"
                       placeholder="e.g Project Name"
