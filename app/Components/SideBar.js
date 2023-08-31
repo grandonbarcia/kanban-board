@@ -34,7 +34,6 @@ export default function SideBar({
   }
 
   useEffect(() => {
-    console.log(boardNames);
     if (!isEmpty(boardNames) || value === '') return;
     localStorage.setItem('Board Names', JSON.stringify(boardNames));
   }, [boardNames]);
