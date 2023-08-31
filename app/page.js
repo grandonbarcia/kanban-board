@@ -19,21 +19,22 @@ const default_database = {
 };
 
 export default function Home() {
-  function wtf(name) {
-    if (typeof window !== 'undefined') {
-      // Perform localStorage action
-      return JSON.parse(localStorage.getItem(name));
-    }
-    return false;
-  }
   const [activeBoard, setActiveBoard] = useState(
-    wtf('Active Board') || 'Platform Launch'
+    JSON.parse(localStorage.getItem('Active Board')) || 'Platform Launch'
   );
 
-  const [data, setData] = useState(wtf(activeBoard) || initialData);
+  useEffect(() => {}, []);
+
+  const [data, setData] = useState(
+    JSON.parse(localStorage.getItem(activeBoard)) || initialData
+  );
 
   const [boardNames, setBoardNames] = useState(
-    wtf('Board Names') || ['Platform Launch', 'Marketing Plan', 'Road Map']
+    JSON.parse(localStorage.getItem('Board Names')) || [
+      'Platform Launch',
+      'Marketing Plan',
+      'Road Map',
+    ]
   );
 
   function onDragEnd(result) {
