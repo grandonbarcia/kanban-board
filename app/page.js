@@ -19,23 +19,13 @@ const default_database = {
 };
 
 export default function Home() {
-  const [activeBoard, setActiveBoard] = useState(
-    JSON.parse(localStorage.getItem('Active Board')) || 'Platform Launch'
-  );
+  const [activeBoard, setActiveBoard] = useState(null);
 
   useEffect(() => {}, []);
 
-  const [data, setData] = useState(
-    JSON.parse(localStorage.getItem(activeBoard)) || initialData
-  );
+  const [data, setData] = useState(null);
 
-  const [boardNames, setBoardNames] = useState(
-    JSON.parse(localStorage.getItem('Board Names')) || [
-      'Platform Launch',
-      'Marketing Plan',
-      'Road Map',
-    ]
-  );
+  const [boardNames, setBoardNames] = useState([]);
 
   function onDragEnd(result) {
     // Reorder our column
@@ -100,20 +90,38 @@ export default function Home() {
     setData(newState);
   }
 
-  useEffect(() => {
-    localStorage.setItem(activeBoard, JSON.stringify(data));
-  }, [data]);
+  // useEffect(() => {
+  //   const bar = JSON.parse(localStorage.getItem(activeBoard));
+
+  //   setData(bar);
+  // }, [activeBoard]);
+
+  // useEffect(() => {
+  // if (!localStorage.getItem('Active Board')) {
+  //   localStorage.setItem('Active Board', JSON.stringify(activeBoard));
+  // }
+  // if (!localStorage.getItem('Board Names')) {
+  //   localStorage.setItem('Board Names', JSON.stringify(boardNames));
+  // }
+  //   const foo =
+  //     JSON.parse(localStorage.getItem('Active Board')) || 'Platform Launch';
+  //   setActiveBoard(foo);
+  //   console.log(foo);
+  //   const bar = JSON.parse(localStorage.getItem(activeBoard));
+  //   console.log(bar);
+  //   setData(bar);
+  // }, []);
 
   useEffect(() => {
     if (!localStorage.getItem('Active Board')) {
-      localStorage.setItem('Active Board', JSON.stringify(activeBoard));
+      localStorage.setItem('Active Board', JSON.stringify('Platform Launch'));
     }
     if (!localStorage.getItem('Board Names')) {
-      localStorage.setItem('Board Names', JSON.stringify(boardNames));
+      localStorage.setItem(
+        'Board Names',
+        JSON.stringify(['Marketing Plan', 'Platform Launch', 'Road Map'])
+      );
     }
-  }, []);
-
-  useEffect(() => {
     if (!localStorage.getItem('Platform Launch')) {
       localStorage.setItem('Platform Launch', JSON.stringify(platformLaunch));
     }
@@ -123,13 +131,28 @@ export default function Home() {
     if (!localStorage.getItem('Road Map')) {
       localStorage.setItem('Road Map', JSON.stringify(roadMap));
     }
+
+    setBoardNames(JSON.parse(localStorage.getItem('Board Names')));
+    setActiveBoard(JSON.parse(localStorage.getItem('Active Board')));
   }, []);
 
   useEffect(() => {
-    localStorage.setItem('Active Board', JSON.stringify(activeBoard));
-    const newBoard = JSON.parse(localStorage.getItem(activeBoard));
-    setData({ ...newBoard, activeBoard: activeBoard });
+    setData(JSON.parse(localStorage.getItem(activeBoard)));
   }, [activeBoard]);
+
+  useEffect(() => {
+    localStorage.setItem(activeBoard, JSON.stringify(data));
+  }, [data]);
+
+  useEffect(() => {
+    localStorage.setItem('Board Names', JSON.stringify(boardNames));
+  }, [boardNames]);
+
+  // useEffect(() => {
+  //   localStorage.setItem('Active Board', JSON.stringify(activeBoard));
+  //   const newBoard = JSON.parse(localStorage.getItem(activeBoard));
+  //   setData({ ...newBoard, activeBoard: activeBoard });
+  // }, [activeBoard]);
 
   return (
     <>
@@ -153,7 +176,7 @@ export default function Home() {
           <div className="h-5/6 bg-gray-800 ">
             <DragDropContext className="relative " onDragEnd={onDragEnd}>
               <div className="flex relative ">
-                {data.columnOrder.map((columnId) => {
+                {data?.columnOrder?.map((columnId) => {
                   const column = data.columns[columnId];
                   const tasks = column.taskIds.map(
                     (taskId) => data.tasks[taskId]

@@ -33,10 +33,11 @@ export default function SideBar({
     }
   }
 
-  useEffect(() => {
-    if (!isEmpty(boardNames) || value === '') return;
-    localStorage.setItem('Board Names', JSON.stringify(boardNames));
-  }, [boardNames]);
+  // useEffect(() => {
+  //   if (!isEmpty(boardNames) || value === '') return;
+  //   localStorage.setItem('Board Names', JSON.stringify(boardNames));
+  //   console.log(boardNames);
+  // }, [boardNames]);
 
   function ErrorMessage() {
     return (
@@ -56,7 +57,7 @@ export default function SideBar({
           ALL BOARDS ( {boardNames.length} )
         </div>
 
-        {boardNames.map((name) => {
+        {boardNames?.map((name) => {
           return (
             <ListOfBoards
               title={name}
