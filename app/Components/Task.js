@@ -159,7 +159,6 @@ export default function Task({
                 {subtasksIds.map((subtask) => {
                   const content = subtasks[subtask].content;
                   const complete = subtasks[subtask].complete;
-
                   return (
                     <div
                       className="flex items-center mb-4 p-3 bg-slate-200 "

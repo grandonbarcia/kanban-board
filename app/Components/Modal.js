@@ -5,20 +5,29 @@ export default function Modal({ data, setData }) {
   const [showModal, setShowModal] = useState(false);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [subtasks, setSubtasks] = useState({});
-  const [subtasksFields, addSubtaskField] = useState([
-    'subtask-1',
-    'subtask-2',
-  ]);
+  const [subtasks, setSubtasks] = useState([]);
+  const [subtasksFields, setSubtaskField] = useState([1, 2]);
 
   const [showTitleError, setShowTitleError] = useState(false);
   const [showContentError, setShowContentError] = useState(false);
 
-  function handleClick() {
-    addSubtaskField((prevFields) => [
+  function addNewTaskField() {
+    setSubtaskField((prevFields) => [
       ...prevFields,
-      'subtask-' + (subtasksFields.length + 1),
+      prevFields[prevFields.length - 1] + 1,
     ]);
+  }
+
+  function removeNewTaskField(indexToBeRemoved) {
+    setSubtaskField((prevFields) => {
+      return prevFields.filter((prev, index) => index !== indexToBeRemoved);
+    });
+    setSubtasks((prevSubtasks) => {
+      const currentData = [...prevSubtasks];
+
+      prevSubtasks.splice(indexToBeRemoved, 1);
+      return [...prevSubtasks];
+    });
   }
 
   function isSubtask(property) {
@@ -43,23 +52,22 @@ export default function Modal({ data, setData }) {
     );
   }
 
-  function handleSubtasks(e, property) {
+  function handleSubtasks(e, index) {
     const value = e.target.value;
 
     if (value.length === 0) {
       setSubtasks((prevSubtasks) => {
-        const currentData = { ...prevSubtasks };
-        delete prevSubtasks[property];
-        return { ...prevSubtasks };
-      });
-    } else {
-      setSubtasks((prevSubtasks) => {
-        return {
-          ...prevSubtasks,
-          [property]: { content: value, complete: false },
-        };
+        const currentData = [...prevSubtasks];
+
+        prevSubtasks.splice(index, 1);
+        return [...prevSubtasks];
       });
     }
+    setSubtasks((prevSubtasks) => {
+      let newSubtasks = [...prevSubtasks];
+      newSubtasks[index] = { content: value, complete: false };
+      return newSubtasks;
+    });
   }
 
   function addNewTask() {
@@ -112,8 +120,8 @@ export default function Modal({ data, setData }) {
     setShowModal(false);
     setTitle('');
     setDescription('');
-    setSubtasks({});
-    addSubtaskField(['subtask-1', 'subtask-2']);
+    setSubtasks([]);
+    setSubtaskField([1, 2]);
   }
 
   return (
@@ -139,8 +147,8 @@ export default function Modal({ data, setData }) {
                     setShowModal(false);
                     setTitle('');
                     setDescription('');
-                    setSubtasks({});
-                    addSubtaskField(['subtask-1', 'subtask-2']);
+                    setSubtasks([]);
+                    setSubtaskField([1, 2]);
                   }}
                 >
                   <span className="sr-only">Close menu</span>
@@ -208,16 +216,24 @@ export default function Modal({ data, setData }) {
 
                 {subtasksFields.map((field, index) => {
                   return (
-                    <div className="flex" key={subtasksFields[index]}>
+                    <div
+                      className="flex items-center mb-2"
+                      key={subtasksFields[index]}
+                    >
                       <input
-                        className="shadow appearance-none border rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline mb-2 bg-gray-600"
+                        className="shadow appearance-none border rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline  bg-gray-600"
                         id={'subtask-' + (index + 1)}
                         type="text"
-                        onChange={(e) =>
-                          handleSubtasks(e, 'subtask-' + (index + 1))
-                        }
+                        onChange={(e) => handleSubtasks(e, index)}
                       />
-                      <h1>X</h1>
+                      <button
+                        onClick={() =>
+                          removeNewTaskField(index, 'subtask-' + (index + 1))
+                        }
+                        className="ml-5"
+                      >
+                        X
+                      </button>
                     </div>
                     // <SubTasksFields key={subtasksFields[index]} index={index} />
                   );
@@ -225,7 +241,7 @@ export default function Modal({ data, setData }) {
 
                 <div>
                   <button
-                    onClick={handleClick}
+                    onClick={addNewTaskField}
                     className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full  mt-3"
                   >
                     + Add Subtask
@@ -250,7 +266,7 @@ export default function Modal({ data, setData }) {
                 <div>
                   <button
                     className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full mt-5"
-                    onClick={() => addNewTask()}
+                    onClick={addNewTask}
                   >
                     Create Task
                   </button>
