@@ -162,9 +162,9 @@ export default function Modal({ data, setData }) {
                     aria-hidden="true"
                   >
                     <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
                       d="M6 18L18 6M6 6l12 12"
                     />
                   </svg>
@@ -174,7 +174,7 @@ export default function Modal({ data, setData }) {
               <div>
                 <label
                   className="block  text-sm font-bold mb-2 pt-5"
-                  for="username"
+                  htmlFor="username"
                 >
                   Title
                 </label>
@@ -191,7 +191,7 @@ export default function Modal({ data, setData }) {
               </div>
               <div>
                 <label
-                  for="content"
+                  htmlFor="content"
                   className="block text-sm font-bold mb-2 pt-5"
                 >
                   Description
@@ -208,7 +208,7 @@ export default function Modal({ data, setData }) {
               </div>
               <div>
                 <label
-                  for="description"
+                  htmlFor="description"
                   className="block  text-sm font-bold mb-2 pt-5"
                 >
                   Subtasks
@@ -249,7 +249,7 @@ export default function Modal({ data, setData }) {
                 </div>
                 <div>
                   <label
-                    for="description"
+                    htmlFor="description"
                     className="block  text-sm font-bold mb-2 pt-5"
                   >
                     Status

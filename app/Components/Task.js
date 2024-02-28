@@ -140,9 +140,9 @@ export default function Task({
                     aria-hidden="true"
                   >
                     <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
                       d="M6 18L18 6M6 6l12 12"
                     />
                   </svg>
@@ -174,7 +174,7 @@ export default function Task({
                         onChange={(e) => {}}
                       />
                       <label
-                        for="default-checkbox"
+                        htmlFor="default-checkbox"
                         className={complete ? lineThrough : noLineThrough}
                       >
                         {content}
@@ -190,7 +190,7 @@ export default function Task({
               <div>
                 <div>
                   <label
-                    for="countries"
+                    htmlFor="countries"
                     className="block mb-2 text-sm font-medium text-white "
                   >
                     Status

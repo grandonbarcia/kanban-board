@@ -90,28 +90,6 @@ export default function Home() {
     setData(newState);
   }
 
-  // useEffect(() => {
-  //   const bar = JSON.parse(localStorage.getItem(activeBoard));
-
-  //   setData(bar);
-  // }, [activeBoard]);
-
-  // useEffect(() => {
-  // if (!localStorage.getItem('Active Board')) {
-  //   localStorage.setItem('Active Board', JSON.stringify(activeBoard));
-  // }
-  // if (!localStorage.getItem('Board Names')) {
-  //   localStorage.setItem('Board Names', JSON.stringify(boardNames));
-  // }
-  //   const foo =
-  //     JSON.parse(localStorage.getItem('Active Board')) || 'Platform Launch';
-  //   setActiveBoard(foo);
-  //   console.log(foo);
-  //   const bar = JSON.parse(localStorage.getItem(activeBoard));
-  //   console.log(bar);
-  //   setData(bar);
-  // }, []);
-
   useEffect(() => {
     if (!localStorage.getItem('Active Board')) {
       localStorage.setItem('Active Board', JSON.stringify('Platform Launch'));

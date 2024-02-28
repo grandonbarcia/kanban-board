@@ -33,12 +33,6 @@ export default function SideBar({
     }
   }
 
-  // useEffect(() => {
-  //   if (!isEmpty(boardNames) || value === '') return;
-  //   localStorage.setItem('Board Names', JSON.stringify(boardNames));
-  //   console.log(boardNames);
-  // }, [boardNames]);
-
   function ErrorMessage() {
     return (
       <div className="pt-3 pl-1 text-red-600">
