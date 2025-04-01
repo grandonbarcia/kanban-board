@@ -32,19 +32,19 @@ Users can drag and drop each task from one column to the another
 
 Users can switch between boards from the dashboard on the left
 
-![](/public/img/KB3.JPG)
+![](/public/img/KB3.PNG)
 
 Users can add a new board by clicking on the "Create new Board" button in the left dashboard
 
-![](/public/img/KB4.JPG)
+![](/public/img/KB4.PNG)
 
-![](/public/img/KB5.JPG)
+![](/public/img/KB5.PNG)
 
 Users can add a new task to the current board by click on the "Add new Task" button in the top right
 
-![](/public/img/KB8.JPG)
+![](/public/img/KB8.PNG)
 
-![](/public/img/KB6.JPG)
+![](/public/img/KB6.PNG)
 
 Users can click on the arrow of each task to open a view the task description
-![](/public/img/KB9.JPG)
+![](/public/img/KB9.PNG)
