@@ -18,6 +18,7 @@ Built with:
 
 To launch the application, please run the following command from the project root folder:
 
+`npm run build`
 `npm start`
 
 ## Screenshots
